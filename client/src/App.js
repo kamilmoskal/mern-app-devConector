@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utilities/setAuthToken";
+import { setCurrentUser, logoutUser } from "./store/actions/authActions";
 
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
@@ -10,6 +14,26 @@ import Register from "./components/auth/Register";
 import "./App.css";
 
 class App extends Component {
+  componentDidMount() {
+    //Check for token
+    if (localStorage.jwtToken) {
+      // Set auth token header auth
+      setAuthToken(localStorage.jwtToken);
+      // Decode token and get user info and exp
+      const decoded = jwt_decode(localStorage.jwtToken);
+      // Set user and isAuthenticated
+      this.props.setCurrentUser(decoded);
+
+      // CHeck for expired token
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        // Logout user
+        this.props.logoutUser();
+        // Redirect to login
+        window.location.href = "/login";
+      }
+    }
+  }
   render() {
     return (
       <Router>
@@ -27,4 +51,12 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user)),
+  logoutUser: () => dispatch(logoutUser())
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(App);
