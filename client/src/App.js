@@ -13,6 +13,9 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
+import EditProfile from "./components/edit-profile/EditProfile";
+import AddExperience from "./components/add-credentials/AddExperience";
+import AddEducation from "./components/add-credentials/AddEducation";
 
 import "./App.css";
 
@@ -50,6 +53,9 @@ class App extends Component {
             <Route path="/register" component={Register} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/create-profile" component={CreateProfile} />
+            <Route path="/edit-profile" component={EditProfile} />
+            <Route path="/add-experience" component={AddExperience} />
+            <Route path="/add-education" component={AddEducation} />
           </div>
           <Footer />
         </div>
