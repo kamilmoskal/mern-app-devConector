@@ -97,3 +97,24 @@ export const createProfile = (profileData, history) => dispatch => {
       dispatch({ type: types.GET_ERRORS, payload: err.response.data })
     );
 };
+
+// Get all profiles getProfiles
+export const getProfiles = () => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get("/api/profile/all")
+    .then(res => dispatch({ type: types.GET_PROFILES, payload: res.data }))
+    .catch(err => dispatch({ type: types.GET_PROFILES, payload: null }));
+};
+
+// Get profile by handle
+export const getProfileByHandle = (handle, history) => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get(`/api/profile/handle/${handle}`)
+    .then(res => dispatch({ type: types.GET_PROFILE, payload: res.data }))
+    .catch(err => {
+      dispatch({ type: types.GET_PROFILE, payload: null });
+      history.push("/not-found");
+    });
+};
