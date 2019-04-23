@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 class ProfileGithub extends Component {
   _isMounted = false;
   state = {
-    clientId: "e3538568cbc331f181f8",
-    clientSecret: "4f34202492a5876906e2a48f9492d2378d7a9c0b",
+    clientId: process.env.REACT_APP_CLIENT_ID,
+    clientSecret: process.env.REACT_APP_CLIENT_SECRET,
     count: 5,
     sort: "created: asc",
     repos: []
