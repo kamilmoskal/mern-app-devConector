@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
 import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utilities/setAuthToken";
@@ -19,6 +24,8 @@ import AddEducation from "./components/add-credentials/AddEducation";
 import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
 import NotFound from "./components/not-found/NotFound";
+import Posts from "./components/posts/Posts";
+import Post from "./components/post/Post";
 
 import "./App.css";
 
@@ -50,8 +57,8 @@ class App extends Component {
       <Router>
         <div className="App">
           <Navbar />
-          <Route exact path="/" component={Landing} />
-          <div className="container">
+          <Switch>
+            <Route exact path="/" component={Landing} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/dashboard" component={Dashboard} />
@@ -62,7 +69,10 @@ class App extends Component {
             <Route path="/profiles" component={Profiles} />
             <Route path="/profile/:handle" component={Profile} />
             <Route path="/not-found" component={NotFound} />
-          </div>
+            <Route path="/feed" component={Posts} />
+            <Route path="/post/:id" component={Post} />
+            <Redirect to="/" />
+          </Switch>
           <Footer />
         </div>
       </Router>
